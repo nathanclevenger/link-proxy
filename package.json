@@ -1,0 +1,92 @@
+{
+  "name": "proxy",
+  "description": "Interact with Microlink API without exposing your creedentials.",
+  "homepage": "https://github.com/microlinkhq/proxy",
+  "version": "2.0.18",
+  "main": "src/index.js",
+  "author": {
+    "email": "josefrancisco.verdu@gmail.com",
+    "name": "Kiko Beats",
+    "url": "https://github.com/Kikobeats"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/proxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/proxy/issues"
+  },
+  "keywords": [
+    "credentials",
+    "microlink",
+    "proxy"
+  ],
+  "dependencies": {
+    "@microlink/mql": "~0.8.1",
+    "cors": "~2.8.5",
+    "debug-logfmt": "~1.0.4",
+    "micri": "~4.3.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
+    "conventional-github-releaser": "latest",
+    "finepack": "latest",
+    "git-authors-cli": "latest",
+    "git-dirty": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "micro-dev": "latest",
+    "npm-check-updates": "latest",
+    "prettier-standard": "latest",
+    "standard": "latest",
+    "standard-markdown": "latest",
+    "standard-version": "latest",
+    "untracked": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "untracked > .nowignore",
+    "clean": "rm -rf node_modules",
+    "dev": "TZ=UTC NODE_ENV=development DEBUG=microlink-proxy* node src/server",
+    "heroku-prebuild": "npx untracked > .slugignore",
+    "lint": "standard-markdown README.md && standard",
+    "postrelease": "npm run release:tags && npm run release:github",
+    "pretest": "npm run lint",
+    "release": "standard-version -a",
+    "release:github": "conventional-github-releaser -p angular",
+    "release:tags": "git push --follow-tags origin HEAD:master",
+    "start": "TZ=UTC NODE_ENV=production DEBUG=microlink-proxy* node index.js",
+    "test": "exit 0",
+    "update": "ncu -u",
+    "update:check": "ncu -- --error-level 2"
+  },
+  "license": "MIT",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "package.json": [
+      "finepack"
+    ],
+    "*.js": [
+      "prettier-standard"
+    ],
+    "*.md": [
+      "standard-markdown"
+    ]
+  }
+}
